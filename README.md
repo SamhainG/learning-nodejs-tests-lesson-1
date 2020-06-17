@@ -10,6 +10,8 @@ yum install nodejs nodejs-npm
 
 ## Установка необходимых модулей ##
 
+Все команды необходимо выполнять в любой удобной папке с [правами на запись](https://ru.wikipedia.org/wiki/Chmod) для вашего пользователя. Например **/home/<username>/lesson1**.
+
 Для запуска простого теста нам понадобятся два модуля: [mocha](https://mochajs.org/) и [chai](https://www.chaijs.com/). Они являются довольно популярными и доступными для понимания.
 Первый из них - это фреймворк для запуска тестов и генерации отчетов, а второй - набор инструментов для тестирования.
 Установить их можно командой:
@@ -50,6 +52,32 @@ npm init
 ```
 
 И ответить на парочку вопросов. Можно просто жать ```Enter```, тогда все значения будут установлены по умолчанию.
+
+В итоге, содержимое ```package.json``` должно иметь примерно следующий вид:
+
+```json
+{
+  "name": "learning-nodejs-tests-lesson-1",
+  "version": "1.0.0",
+  "description": "## Установка node.js ##",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.decluster.ria.com/bu-auto-qa/learning/nodejs-tests/lesson-1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+```
 
 ## Первый тест ##
 
@@ -98,6 +126,28 @@ describe('Проверка арифметических операторов jav
 });
 ```
 
+Итоговое содержимое файла ```test/index.js```:
+
+```javascript
+const chai = require("chai"),
+			expect = chai.expect;
+
+describe('Проверка арифметических операторов javascript', function(){
+	it('Оператор сложения', function(){
+		return expect(2+2).to.be.equal(4);
+	});
+	it('Оператор вычетания', function(){
+		return expect(4-2).to.be.equal(2);
+	});
+	it('Оператор умножения', function(){
+		return expect(2*2).to.be.equal(4);
+	});
+	it('Оператор деления', function(){
+		return expect(4/2).to.be.equal(2);
+	})
+});
+```
+
 После этого запустим:
 
 ```bash
@@ -105,6 +155,7 @@ npm test
 ```
 
 Если все хорошо, то мы увидим отчет о тестировании, где зелеными галочками отмечены успешно пройденные тесты.
+
 Как **npm** узнал что надо запустить именно наш тест? Ответ находится в файле ```package.json```:
 
 ```json
